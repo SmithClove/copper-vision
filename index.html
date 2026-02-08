@@ -1,0 +1,449 @@
+Index · HTML
+Copy
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COPPER.VISION</title>
+    <meta name="description" content="Data Strategy, Computer Vision Research">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808;
+            --bg-elevated: #0e0e0e;
+            --copper: #c47a2a;
+            --copper-dim: #8b5a1a;
+            --copper-glow: #d4943a;
+            --text: #9a9a9a;
+            --text-bright: #d4d4d4;
+            --text-dim: #444;
+            --mono: 'JetBrains Mono', 'Courier New', monospace;
+            --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle noise texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Scanline overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.08) 2px,
+                rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .shell {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        /* Header bar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--text-dim);
+            margin-bottom: 2.5rem;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .topbar-nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.2s;
+        }
+        .topbar-nav a:hover { color: var(--copper); }
+
+        /* Hero / Identity */
+        .identity {
+            margin-bottom: 3rem;
+        }
+
+        .identity h1 {
+            font-family: var(--mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--copper);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .identity h1 .cursor {
+            display: inline-block;
+            width: 14px;
+            height: 2px;
+            background: var(--copper);
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .identity .tagline {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .section:nth-child(4) { animation-delay: 0.1s; }
+        .section:nth-child(5) { animation-delay: 0.2s; }
+        .section:nth-child(6) { animation-delay: 0.3s; }
+        .section:nth-child(7) { animation-delay: 0.4s; }
+        .section:nth-child(8) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-head {
+            font-size: 0.75rem;
+            color: var(--copper);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-head::before {
+            content: '//';
+            color: var(--text-dim);
+        }
+
+        .section p {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--text);
+            max-width: 580px;
+        }
+
+        /* Publications */
+        .pub-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #151515;
+            font-size: 0.85rem;
+        }
+
+        .pub-item:last-child { border-bottom: none; }
+
+        .pub-title {
+            color: var(--text-bright);
+            font-family: var(--sans);
+            font-weight: 400;
+        }
+
+        .pub-title a {
+            color: var(--text-bright);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(196, 122, 42, 0.3);
+            transition: all 0.2s;
+        }
+
+        .pub-title a:hover {
+            color: var(--copper);
+        }
+
+        .pub-meta {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            margin-top: 0.2rem;
+        }
+
+        .pub-meta .venue {
+            color: var(--copper-dim);
+        }
+
+        .cited-by {
+            margin-top: 0.5rem;
+        }
+
+        .cited-by summary {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            padding: 0.3rem 0;
+            transition: color 0.2s;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .cited-by summary::-webkit-details-marker { display: none; }
+
+        .cited-by summary::before {
+            content: '▸';
+            font-size: 0.65rem;
+            color: var(--copper-dim);
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .cited-by[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .cited-by summary:hover {
+            color: var(--copper);
+        }
+
+        .cited-by > .citation-item:first-of-type {
+            margin-top: 0.4rem;
+            padding-top: 0.4rem;
+            border-top: 1px solid #151515;
+        }
+
+        .citation-item {
+            display: grid;
+            grid-template-columns: 72px 1fr;
+            gap: 0.75rem;
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #111;
+        }
+
+        .citation-item:last-child { border-bottom: none; }
+
+        .citation-date {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            padding-top: 1px;
+        }
+
+        .citation-text {
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+        }
+
+        .citation-text em {
+            color: var(--text-bright);
+            font-style: italic;
+        }
+
+        /* Stack tags */
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border: 1px solid #222;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: border-color 0.2s;
+        }
+
+        .tag:hover { border-color: var(--copper-dim); }
+
+        /* Contact */
+        .contact-info a {
+            color: var(--copper);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(196, 122, 42, 0.3);
+            transition: all 0.2s;
+        }
+        .contact-info a:hover {
+            color: var(--bg);
+            background: var(--copper);
+            padding: 0 3px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #1a1a1a;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            .shell { padding: 2rem 1.25rem 3rem; }
+            .identity h1 { font-size: 1.4rem; letter-spacing: 2px; }
+            .topbar { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+            .topbar-nav a:first-child { margin-left: 0; }
+            .footer { flex-direction: column; gap: 0.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <div class="topbar">
+        <span id="visit-counter">VISITS: —</span>
+        <nav class="topbar-nav">
+            <a href="#about">About</a>
+            <a href="#research">Research</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </div>
+
+    <div class="identity">
+        <h1>COPPER.VISION <span class="cursor"></span></h1>
+        <div class="tagline">Data Strategy · Computer Vision Research</div>
+    </div>
+
+
+
+
+    <div class="section" id="about">
+        <div class="section-head">About</div>
+        <p>
+            Building the bridge between raw infrastructure and actionable intelligence. 
+            Specializing in high-fidelity data architecture, portfolio analytics at scale, 
+            and applied computer vision.
+        </p>
+    </div>
+
+
+
+
+    <div class="section" id="research">
+        <div class="section-head">Research</div>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://link.springer.com/book/10.1007/978-3-031-78768-3" target="_blank" rel="noopener">Machine Learning Applications for Satellite Imagery & Fire Detection</a></div>
+            <div class="pub-meta"><span class="venue">Springer Nature</span> · Cited by NASA FireSense, NSF Convergence Accelerator, NARSS</div>
+            <details class="cited-by">
+                <summary>Cited By</summary>
+                <div class="citation-item">
+                    <span class="citation-date">Feb 2025</span>
+                    <span class="citation-text">A. Mohammed, M. Salem, E. Farg, S.A. Mohamed — <em>Earth Observation Data for Mangrove Monitoring and Management at the Red Sea Coastline, Egypt</em></span>
+                </div>
+            </details>
+        </div>
+        <div class="pub-item">
+            <div class="pub-title"><a href="https://www.researchgate.net/publication/373513122_Enhancing_Fire_Detection_through_CNN_and_Transfer_Learning_A_Comprehensive_Research_Study_Corresponding_author#fullTextFileContent" target="_blank" rel="noopener">Enhancing Fire Detection through CNN and Transfer Learning</a></div>
+            <div class="pub-meta"><span class="venue">IEEE</span> · Computer Vision & Sensor Fusion</div>
+            <details class="cited-by">
+                <summary>Cited By</summary>
+                <div class="citation-item">
+                    <span class="citation-date">Apr 2025</span>
+                    <span class="citation-text">L. Mary, R. Welow, V. Ogunrinde — <em>A Novel Measurement Strategy for Explosion Temperature Field Towards Enhancing Fire Process Safety</em></span>
+                </div>
+                <div class="citation-item">
+                    <span class="citation-date">Jul 2024</span>
+                    <span class="citation-text">G. Karaduman — <em>Image Fire Detection Module for Automatic Fire Extinguishing System with Unmanned Ground Vehicles</em></span>
+                </div>
+                <div class="citation-item">
+                    <span class="citation-date">Nov 2023</span>
+                    <span class="citation-text">B. Duraisamy, U. Mariappan, N.N. Kumar, G. Vijay — <em>Real Time Fire Detection and Alert Triggering System</em></span>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-head">Stack</div>
+        <div class="stack-grid">
+            <span class="tag">Azure</span>
+            <span class="tag">DAX</span>
+            <span class="tag">Deneb / Vega</span>
+            <span class="tag">Git</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Power Query</span>
+            <span class="tag">Python</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">SQL</span>
+        </div>
+    </div>
+
+    <div class="section" id="contact">
+        <div class="section-head">Contact</div>
+        <div class="contact-info">
+            <p><a href="tel:+15412103100">541-210-3100</a><br>
+            <a href="mailto:optic@copper.vision">optic@copper.vision</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span>© <span id="yr"></span> <a href="https://smithclove.xyz/" target="_blank" rel="noopener" style="color:var(--text-dim);text-decoration:none;border-bottom:1px dotted rgba(196,122,42,0.3);transition:color 0.2s;">Smith Clove</a></span>
+    </div>
+
+</div>
+
+<script>
+    // Dynamic year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Simple visit counter using localStorage
+    (function() {
+        const el = document.getElementById('visit-counter');
+        try {
+            let count = parseInt(localStorage.getItem('cv_visits') || '0', 10) + 1;
+            localStorage.setItem('cv_visits', count);
+            el.textContent = 'VISITS: ' + count;
+        } catch(e) {
+            el.textContent = 'VISITS: 1';
+        }
+    })();
+</script>
+
+</body>
+</html>
