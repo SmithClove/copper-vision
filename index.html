@@ -1,6 +1,3 @@
-Index · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +7,7 @@ Copy
     <meta name="description" content="Data Strategy, Computer Vision Research">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;500&family=DotGothic16&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #080808;
@@ -21,8 +18,14 @@ Copy
             --text: #9a9a9a;
             --text-bright: #d4d4d4;
             --text-dim: #444;
+            
+            /* Matrix LED Var */
+            --led-yellow: #FFEA00;
+            --led-dim: #4a4500;
+            
             --mono: 'JetBrains Mono', 'Courier New', monospace;
             --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+            --matrix: 'DotGothic16', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -85,11 +88,28 @@ Copy
             letter-spacing: 1.5px;
         }
 
+        /* COUNTER STYLING */
+        #visit-counter {
+            font-family: var(--matrix);
+            color: var(--led-yellow);
+            font-size: 1.1rem; 
+            letter-spacing: 1px;
+            line-height: 1;
+            padding: 4px 8px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 2px;
+            text-shadow: 0 0 4px rgba(255, 234, 0, 0.4); /* Phosphor Glow */
+            position: relative;
+            display: inline-block;
+        }
+
         .topbar-nav a {
             color: var(--text-dim);
             text-decoration: none;
             margin-left: 1.5rem;
             transition: color 0.2s;
+            font-family: var(--mono);
         }
         .topbar-nav a:hover { color: var(--copper); }
 
@@ -295,8 +315,19 @@ Copy
             letter-spacing: 1px;
             transition: border-color 0.2s;
         }
-
+        
         .tag:hover { border-color: var(--copper-dim); }
+
+        .tag-core {
+            border-color: var(--copper-dim);
+            color: var(--copper);
+            font-weight: 700;
+        }
+        
+        .tag-spec {
+            border-color: #222;
+            color: var(--text-dim);
+        }
 
         /* Contact */
         .contact-info a {
@@ -322,7 +353,6 @@ Copy
             justify-content: space-between;
         }
 
-        /* Mobile */
         @media (max-width: 600px) {
             .shell { padding: 2rem 1.25rem 3rem; }
             .identity h1 { font-size: 1.4rem; letter-spacing: 2px; }
@@ -337,7 +367,8 @@ Copy
 <div class="shell">
 
     <div class="topbar">
-        <span id="visit-counter">VISITS: —</span>
+        <span id="visit-counter">VISITS: ...</span>
+        
         <nav class="topbar-nav">
             <a href="#about">About</a>
             <a href="#research">Research</a>
@@ -350,26 +381,20 @@ Copy
         <div class="tagline">Data Strategy · Computer Vision Research</div>
     </div>
 
-
-
-
     <div class="section" id="about">
         <div class="section-head">About</div>
         <p>
-            Building the bridge between raw infrastructure and actionable intelligence. 
-            Specializing in high-fidelity data architecture, portfolio analytics at scale, 
+            Building the bridge between raw data and visual analysis. 
+            Specializing in high-fidelity data archival, portfolio analytics at scale, 
             and applied computer vision.
         </p>
     </div>
-
-
-
 
     <div class="section" id="research">
         <div class="section-head">Research</div>
         <div class="pub-item">
             <div class="pub-title"><a href="https://link.springer.com/book/10.1007/978-3-031-78768-3" target="_blank" rel="noopener">Machine Learning Applications for Satellite Imagery & Fire Detection</a></div>
-            <div class="pub-meta"><span class="venue">Springer Nature</span> · Cited by NASA FireSense, NSF Convergence Accelerator, NARSS</div>
+            <div class="pub-meta"><span class="venue">Springer Nature</span> · Cited by NASA FireSense, NSF Convergence Accelerator, Deployed by NARSS</div>
             <details class="cited-by">
                 <summary>Cited By</summary>
                 <div class="citation-item">
@@ -402,15 +427,57 @@ Copy
     <div class="section">
         <div class="section-head">Stack</div>
         <div class="stack-grid">
-            <span class="tag">Azure</span>
-            <span class="tag">DAX</span>
-            <span class="tag">Deneb / Vega</span>
-            <span class="tag">Git</span>
-            <span class="tag">Power BI</span>
-            <span class="tag">Power Query</span>
-            <span class="tag">Python</span>
-            <span class="tag">PyTorch</span>
-            <span class="tag">SQL</span>
+            <span class="tag tag-core">Azure</span>
+            <span class="tag tag-core">Git</span>
+            <span class="tag tag-core">Machine Learning</span>
+            <span class="tag tag-core">Power BI</span>
+            <span class="tag tag-core">Python</span>
+            <span class="tag tag-core">SQL</span>
+
+            <span class="tag tag-spec">Big-Tiger-Gemma-27B</span>
+            <span class="tag tag-spec">Devtral-2-123B</span>
+            <span class="tag tag-spec">Evol-Instruct</span>
+            <span class="tag tag-spec">Olmo-3.1-32B</span>
+            <span class="tag tag-spec">Phi-4</span>
+            <span class="tag tag-spec">Phi-4-25B</span>
+            <span class="tag tag-spec">Qwen3-Coder-Next</span>
+
+            <span class="tag tag-spec">Azure Data Factory</span>
+            <span class="tag tag-spec">Azure DevOps</span>
+            <span class="tag tag-spec">Azure Synapse</span>
+            <span class="tag tag-spec">DAX</span>
+            <span class="tag tag-spec">Deneb / Vega</span>
+            <span class="tag tag-spec">Power Query</span>
+            <span class="tag tag-spec">T-SQL</span>
+            <span class="tag tag-spec">Tabular Editor</span>
+
+            <span class="tag tag-spec">Archive Indexing</span>
+            <span class="tag tag-spec">Elasticsearch</span>
+            <span class="tag tag-spec">NumPy</span>
+            <span class="tag tag-spec">Pandas</span>
+            <span class="tag tag-spec">Polars</span>
+            <span class="tag tag-spec">Scikit-learn</span>
+            <span class="tag tag-spec">Synthetic Data Upcycling</span>
+
+            <span class="tag tag-spec">Document Restoration</span>
+            <span class="tag tag-spec">LayoutLM</span>
+            <span class="tag tag-spec">OpenCV</span>
+            <span class="tag tag-spec">PaddleOCR</span>
+            <span class="tag tag-spec">PyTorch</span>
+            <span class="tag tag-spec">Tesseract</span>
+            <span class="tag tag-spec">YOLO</span>
+
+            <span class="tag tag-spec">Hugging Face</span>
+            <span class="tag tag-spec">LM Studio</span>
+            <span class="tag tag-spec">Local LLMs</span>
+            <span class="tag tag-spec">Persuasion Research</span>
+            <span class="tag tag-spec">RAG</span>
+            <span class="tag tag-spec">Transformers</span>
+
+            <span class="tag tag-spec">LoRaWAN</span>
+            <span class="tag tag-spec">MQTT</span>
+            <span class="tag tag-spec">Network Diagnostics</span>
+            <span class="tag tag-spec">SDR</span>
         </div>
     </div>
 
@@ -432,16 +499,44 @@ Copy
     // Dynamic year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
-    // Simple visit counter using localStorage
+    // GLOBAL HIT COUNTER (Zero-Infra)
+    // Uses CountAPI to fetch a persistent JSON object.
     (function() {
         const el = document.getElementById('visit-counter');
-        try {
-            let count = parseInt(localStorage.getItem('cv_visits') || '0', 10) + 1;
-            localStorage.setItem('cv_visits', count);
-            el.textContent = 'VISITS: ' + count;
-        } catch(e) {
-            el.textContent = 'VISITS: 1';
-        }
+        
+        // Random GUID namespace to obscure the endpoint from public guessing
+        const namespace = '529a-49c1-882b'; 
+        const key = 'visits';
+        
+        // Helper: Pad numbers for the Matrix aesthetic (e.g., 00124)
+        const pad = (num, places) => String(num).padStart(places, '0');
+
+        // 1. Hit the endpoint (increments count by 1)
+        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('API Error');
+                }
+            })
+            .then(data => {
+                // 2. Update DOM with global count
+                el.textContent = 'VISITS: ' + pad(data.value, 5);
+                
+                // Keep local storage in sync just in case
+                localStorage.setItem('cv_visits', data.value);
+            })
+            .catch(error => {
+                // Fallback: If API is blocked (e.g. uBlock Origin), use local count
+                // This ensures the site never looks "broken"
+                console.warn('Counter API blocked/failed. Using local fallback.');
+                let localCount = parseInt(localStorage.getItem('cv_visits') || '0', 10) + 1;
+                localStorage.setItem('cv_visits', localCount);
+                
+                el.textContent = 'VISITS: ' + pad(localCount, 5);
+                el.style.color = '#8b5a1a'; // Dim copper visual cue indicating offline mode
+            });
     })();
 </script>
 
