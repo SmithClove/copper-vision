@@ -193,20 +193,39 @@
             max-width: 580px;
         }
 
-        /* Publications */
+        /* Shared Details/Summary Styles (Citations + Stack) */
+        details summary {
+            cursor: pointer;
+            list-style: none;
+            transition: color 0.2s;
+        }
+        
+        details summary::-webkit-details-marker { display: none; }
+
+        details summary::before {
+            content: '▸';
+            font-size: 0.65rem;
+            color: var(--copper-dim);
+            transition: transform 0.2s;
+            display: inline-block;
+            margin-right: 0.4rem;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        details summary:hover {
+            color: var(--copper);
+        }
+
+        /* Publications Specifics */
         .pub-item {
             padding: 0.6rem 0;
             border-bottom: 1px solid #151515;
             font-size: 0.85rem;
         }
-
         .pub-item:last-child { border-bottom: none; }
-
-        .pub-title {
-            color: var(--text-bright);
-            font-family: var(--sans);
-            font-weight: 400;
-        }
 
         .pub-title a {
             color: var(--text-bright);
@@ -214,55 +233,22 @@
             border-bottom: 1px dotted rgba(196, 122, 42, 0.3);
             transition: all 0.2s;
         }
-
-        .pub-title a:hover {
-            color: var(--copper);
-        }
+        .pub-title a:hover { color: var(--copper); }
 
         .pub-meta {
             color: var(--text-dim);
             font-size: 0.75rem;
             margin-top: 0.2rem;
         }
+        .pub-meta .venue { color: var(--copper-dim); }
 
-        .pub-meta .venue {
-            color: var(--copper-dim);
-        }
-
-        .cited-by {
-            margin-top: 0.5rem;
-        }
-
+        .cited-by { margin-top: 0.5rem; }
         .cited-by summary {
             font-size: 0.7rem;
             color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            cursor: pointer;
             padding: 0.3rem 0;
-            transition: color 0.2s;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .cited-by summary::-webkit-details-marker { display: none; }
-
-        .cited-by summary::before {
-            content: '▸';
-            font-size: 0.65rem;
-            color: var(--copper-dim);
-            transition: transform 0.2s;
-            display: inline-block;
-        }
-
-        .cited-by[open] summary::before {
-            transform: rotate(90deg);
-        }
-
-        .cited-by summary:hover {
-            color: var(--copper);
         }
 
         .cited-by > .citation-item:first-of-type {
@@ -279,49 +265,50 @@
             font-size: 0.8rem;
             border-bottom: 1px solid #111;
         }
-
         .citation-item:last-child { border-bottom: none; }
+        .citation-date { color: var(--text-dim); font-size: 0.7rem; padding-top: 1px; }
+        .citation-text { color: var(--text); font-family: var(--sans); font-weight: 300; }
+        .citation-text em { color: var(--text-bright); font-style: italic; }
 
-        .citation-date {
-            color: var(--text-dim);
-            font-size: 0.7rem;
-            padding-top: 1px;
-        }
-
-        .citation-text {
-            color: var(--text);
-            font-family: var(--sans);
-            font-weight: 300;
-        }
-
-        .citation-text em {
-            color: var(--text-bright);
-            font-style: italic;
-        }
-
-        /* Stack Grouping */
+        /* Stack Grouping (Collapsible) */
         .stack-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #111;
         }
         
         .stack-group:last-child {
             margin-bottom: 0;
+            border-bottom: none;
         }
 
-        .group-label {
-            font-size: 0.7rem;
+        .stack-group summary {
+            font-size: 0.75rem;
             color: var(--copper);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            padding: 0.75rem 0;
             font-family: var(--mono);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stack-group summary:hover {
+            color: var(--copper-glow);
         }
 
         .stack-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            padding-bottom: 1rem;
+            padding-left: 1rem; /* Indent content */
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tag {
@@ -435,10 +422,10 @@
     </div>
 
     <div class="section">
-        <div class="section-head">Stack</div>
+        <div class="section-head">Tools</div>
         
-        <div class="stack-group">
-            <div class="group-label">Robotics & Signals</div>
+        <details class="stack-group">
+            <summary>Robotics & Signals</summary>
             <div class="stack-grid">
                 <span class="tag">Autonomous Home Service</span>
                 <span class="tag">LoRaWAN</span>
@@ -448,15 +435,15 @@
                 <span class="tag">SDR</span>
                 <span class="tag">Ubuntu Server</span>
             </div>
-        </div>
+        </details>
 
-        <div class="stack-group">
-            <div class="group-label">Local AI & LLMs</div>
+        <details class="stack-group">
+            <summary>Local AI & LLMs</summary>
             <div class="stack-grid">
                 <span class="tag">Applied Data Research</span>
-                <span class="tag">Evol-Instruct</span>
                 <span class="tag">Gemma</span>
                 <span class="tag">Hugging Face</span>
+                <span class="tag">Hyperparameter Tuning</span>
                 <span class="tag">LM Studio</span>
                 <span class="tag">Mistral</span>
                 <span class="tag">OLMo</span>
@@ -465,10 +452,10 @@
                 <span class="tag">RAG</span>
                 <span class="tag">Transformers</span>
             </div>
-        </div>
+        </details>
 
-        <div class="stack-group">
-            <div class="group-label">Computer Vision & OCR</div>
+        <details class="stack-group">
+            <summary>Computer Vision & OCR</summary>
             <div class="stack-grid">
                 <span class="tag">Document Restoration</span>
                 <span class="tag">LayoutLM</span>
@@ -478,10 +465,10 @@
                 <span class="tag">Tesseract</span>
                 <span class="tag">YOLO</span>
             </div>
-        </div>
+        </details>
 
-        <div class="stack-group">
-            <div class="group-label">Cloud & Data Engineering</div>
+        <details class="stack-group">
+            <summary>Cloud & Data Engineering</summary>
             <div class="stack-grid">
                 <span class="tag">Archive Indexing</span>
                 <span class="tag">Azure</span>
@@ -489,35 +476,40 @@
                 <span class="tag">Azure DevOps</span>
                 <span class="tag">Azure Synapse</span>
                 <span class="tag">Elasticsearch</span>
+                <span class="tag">Fossil</span>
                 <span class="tag">Git</span>
+                <span class="tag">PostgreSQL</span>
                 <span class="tag">SQL</span>
+                <span class="tag">SQLite</span>
+                <span class="tag">T-SQL</span>
             </div>
-        </div>
+        </details>
 
-        <div class="stack-group">
-            <div class="group-label">Data Strategy & Visualization</div>
+        <details class="stack-group">
+            <summary>Enterprise Reporting & Data Visualization</summary>
             <div class="stack-grid">
                 <span class="tag">DAX</span>
                 <span class="tag">Deneb / Vega</span>
                 <span class="tag">Power BI</span>
                 <span class="tag">Power Query</span>
-                <span class="tag">T-SQL</span>
                 <span class="tag">Tabular Editor</span>
             </div>
-        </div>
+        </details>
 
-        <div class="stack-group">
-            <div class="group-label">Data Science & Processing</div>
+        <details class="stack-group">
+            <summary>Data Science & Processing</summary>
             <div class="stack-grid">
-                <span class="tag">Machine Learning</span>
+                <span class="tag">Adaptive Control</span>
+                <span class="tag">Machine Learning (Supervised, Unsupervised, Reinforcement)</span>
                 <span class="tag">NumPy</span>
                 <span class="tag">Pandas</span>
                 <span class="tag">Polars</span>
+                <span class="tag">Predictive Modeling</span>
                 <span class="tag">Python</span>
                 <span class="tag">Scikit-learn</span>
                 <span class="tag">Synthetic Data Upcycling</span>
             </div>
-        </div>
+        </details>
 
     </div>
 
