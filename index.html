@@ -97,6 +97,16 @@
             margin-bottom: 3rem;
         }
 
+        .logo-mark {
+            margin-bottom: 1.25rem;
+        }
+
+        .logo-mark img {
+            width: 180px;
+            height: auto;
+            display: block;
+        }
+
         .identity h1 {
             font-family: var(--mono);
             font-size: 2rem;
@@ -105,34 +115,79 @@
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0px;
         }
 
         .identity h1 .dot {
             display: inline-block;
-            width: 14px;
-            height: 14px;
+            width: 10px;
+            height: 10px;
             background: var(--copper);
             border-radius: 50%;
-            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* Center dot — copper pulse */
+        .identity h1 .dot-c {
+            width: 14px;
+            height: 14px;
+            margin: 0 2px;
+            animation: pulseCenter 2.4s ease-in-out infinite;
+        }
+
+        /* Side dots — inverse pulse + hue cycling */
+        .identity h1 .dot-l {
             margin-left: 6px;
+            animation: 
+                pulseSide 2.4s ease-in-out infinite,
+                hueLeft 10s linear infinite;
         }
 
-        .identity h1 .dot-a {
-            animation: pulseA 1.6s ease-in-out infinite;
+        .identity h1 .dot-r {
+            margin-right: 6px;
+            animation: 
+                pulseSide 2.4s ease-in-out infinite,
+                hueRight 10s linear infinite;
         }
 
-        .identity h1 .dot-b {
-            animation: pulseB 1.6s ease-in-out infinite;
+        /* Center: bright → dim → bright */
+        @keyframes pulseCenter {
+            0%, 100% { 
+                opacity: 1; 
+                box-shadow: 0 0 8px rgba(196, 122, 42, 0.6); 
+            }
+            50% { 
+                opacity: 0.1; 
+                box-shadow: none; 
+            }
         }
 
-        @keyframes pulseA {
-            0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(196, 122, 42, 0.5); }
-            50% { opacity: 0.12; box-shadow: none; }
+        /* Sides: dim → bright → dim (inverse of center) */
+        @keyframes pulseSide {
+            0%, 100% { 
+                opacity: 0.08; 
+                box-shadow: none;
+                transform: scale(0.85);
+            }
+            50% { 
+                opacity: 1; 
+                box-shadow: 0 0 10px rgba(196, 122, 42, 0.7);
+                transform: scale(1);
+            }
         }
 
-        @keyframes pulseB {
-            0%, 100% { opacity: 0.12; box-shadow: none; }
-            50% { opacity: 1; box-shadow: 0 0 6px rgba(196, 122, 42, 0.5); }
+        /* Dot L: full hue rotation */
+        @keyframes hueLeft {
+            0%   { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Dot R: offset 180° — always complementary */
+        @keyframes hueRight {
+            0%   { filter: hue-rotate(180deg); }
+            100% { filter: hue-rotate(540deg); }
         }
 
         .identity .tagline {
@@ -156,6 +211,7 @@
         .section:nth-child(6) { animation-delay: 0.3s; }
         .section:nth-child(7) { animation-delay: 0.4s; }
         .section:nth-child(8) { animation-delay: 0.5s; }
+        .section:nth-child(9) { animation-delay: 0.6s; }
 
         @keyframes slideIn {
             to { opacity: 1; transform: translateY(0); }
@@ -398,6 +454,7 @@
         @media (max-width: 600px) {
             .shell { padding: 2rem 1.25rem 3rem; }
             .identity h1 { font-size: 1.4rem; letter-spacing: 2px; }
+            .logo-mark img { width: 130px; }
             .topbar { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
             .topbar-nav a:first-child { margin-left: 0; }
             .footer { flex-direction: column; gap: 0.25rem; }
@@ -412,12 +469,14 @@
         <nav class="topbar-nav">
             <a href="#about">About</a>
             <a href="#research">Research</a>
+            <a href="#services">Services</a>
             <a href="#contact">Contact</a>
         </nav>
     </div>
 
     <div class="identity">
-        <h1>COPPER.VISION <span class="dot dot-a"></span><span class="dot dot-b"></span></h1>
+        <div class="logo-mark"><img src="logo.png" alt="COPPER.VISION" /></div>
+        <h1>COPPER<span class="dot dot-l"></span><span class="dot dot-c"></span><span class="dot dot-r"></span>VISION</h1>
         <div class="tagline">Data Strategy · Computer Vision Research</div>
     </div>
 
@@ -464,6 +523,22 @@
         </div>
     </div>
 
+    <div class="section" id="services">
+        <div class="section-head">Services</div>
+        <div class="stack-grid" style="padding-top: 0.25rem;">
+            <span class="tag">Adaptive Control Systems</span>
+            <span class="tag">Applied Data Research</span>
+            <span class="tag">Archive Indexing & Recovery</span>
+            <span class="tag">Document Restoration</span>
+            <span class="tag">Hyperparameter Optimization</span>
+            <span class="tag">Machine Learning — Supervised · Unsupervised · Reinforcement</span>
+            <span class="tag">Network Diagnostics</span>
+            <span class="tag">Predictive Modeling</span>
+            <span class="tag">Retrieval-Augmented Generation</span>
+            <span class="tag">Synthetic Data Engineering</span>
+        </div>
+    </div>
+
     <div class="section">
         <div class="section-head">Tools</div>
         
@@ -474,15 +549,15 @@
             <summary>Cloud & Data Engineering</summary>
             <div class="stack-content">
                 <div class="stack-grid">
-                    <span class="tag">Archive Indexing</span>
                     <span class="tag">Azure</span>
                     <span class="tag">Azure DevOps</span>
+                    <span class="tag">Forgejo</span>
                 </div>
                 <details class="stack-subgroup">
                     <summary>Databases</summary>
                     <div class="stack-grid">
                         <span class="tag">DuckDB</span>
-                        <span class="tag">Elasticsearch</span>
+                        <span class="tag">OpenSearch</span>
                         <span class="tag">PostgreSQL</span>
                         <span class="tag">SQLite</span>
                     </div>
@@ -511,7 +586,6 @@
             <summary>Computer Vision & OCR</summary>
             <div class="stack-content">
                 <div class="stack-grid">
-                    <span class="tag">Document Restoration</span>
                     <span class="tag">LayoutLM</span>
                     <span class="tag">Tesseract</span>
                     <span class="tag">YOLO</span>
@@ -522,7 +596,6 @@
                         <span class="tag">OpenCV</span>
                         <span class="tag">PaddleOCR</span>
                         <span class="tag">PyTorch</span>
-                        <span class="tag">UV</span>
                     </div>
                 </details>
             </div>
@@ -534,12 +607,6 @@
         <details class="stack-group">
             <summary>Data Science & Processing</summary>
             <div class="stack-content">
-                <div class="stack-grid">
-                    <span class="tag">Adaptive Control</span>
-                    <span class="tag">Machine Learning (Supervised, Unsupervised, Reinforcement)</span>
-                    <span class="tag">Predictive Modeling</span>
-                    <span class="tag">Synthetic Data Upcycling</span>
-                </div>
                 <details class="stack-subgroup">
                     <summary>Python Packages</summary>
                     <div class="stack-grid">
@@ -560,6 +627,13 @@
             <summary>Enterprise Reporting & Data Visualization</summary>
             <div class="stack-content">
                 <details class="stack-subgroup">
+                    <summary>FOSS</summary>
+                    <div class="stack-grid">
+                        <span class="tag">Apache Superset</span>
+                        <span class="tag">Grafana</span>
+                    </div>
+                </details>
+                <details class="stack-subgroup">
                     <summary>Power BI Ecosystem</summary>
                     <div class="stack-grid">
                         <span class="tag">DAX</span>
@@ -571,18 +645,16 @@
             </div>
         </details>
 
-                <!-- ═══════════════════════════════════════ -->
+        <!-- ═══════════════════════════════════════ -->
         <!-- LOCAL AI & LLMs                        -->
         <!-- ═══════════════════════════════════════ -->
         <details class="stack-group">
             <summary>Local AI & LLMs</summary>
             <div class="stack-content">
                 <div class="stack-grid">
-                    <span class="tag">Applied Data Research</span>
                     <span class="tag">Hugging Face</span>
-                    <span class="tag">Hyperparameter Tuning</span>
                     <span class="tag">LM Studio</span>
-                    <span class="tag">RAG</span>
+                    <span class="tag">Ollama</span>
                     <span class="tag">Transformers</span>
                 </div>
                 <details class="stack-subgroup">
@@ -605,8 +677,7 @@
             <summary>Robotics & Signals</summary>
             <div class="stack-content">
                 <div class="stack-grid">
-                    <span class="tag">Autonomous Home Service</span>
-                    <span class="tag">Network Diagnostics</span>
+                    <span class="tag">GNU Radio</span>
                     <span class="tag">Reachy Mini</span>
                     <span class="tag">SDR</span>
                     <span class="tag">Ubuntu Server</span>
@@ -615,6 +686,7 @@
                     <summary>Protocols</summary>
                     <div class="stack-grid">
                         <span class="tag">LoRaWAN</span>
+                        <span class="tag">Mosquitto</span>
                         <span class="tag">MQTT</span>
                     </div>
                 </details>
