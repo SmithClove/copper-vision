@@ -193,24 +193,29 @@
             max-width: 580px;
         }
 
-        /* Shared Details/Summary Styles (Citations + Stack) */
+        /* COLLAPSING ARROWS & DETAILS LOGIC
+           Applies to both Citations and Tool Stacks 
+        */
         details summary {
             cursor: pointer;
-            list-style: none;
+            list-style: none; /* Hide default browser triangle */
             transition: color 0.2s;
         }
         
-        details summary::-webkit-details-marker { display: none; }
+        details summary::-webkit-details-marker { display: none; } /* Safari/Chrome hide */
 
+        /* The Arrow */
         details summary::before {
             content: '▸';
             font-size: 0.65rem;
             color: var(--copper-dim);
             transition: transform 0.2s;
             display: inline-block;
-            margin-right: 0.4rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
         }
 
+        /* Rotate on Open */
         details[open] summary::before {
             transform: rotate(90deg);
         }
@@ -290,7 +295,7 @@
             padding: 0.75rem 0;
             font-family: var(--mono);
             display: flex;
-            align-items: center;
+            align-items: center; /* Ensures arrow stays aligned with text */
         }
         
         .stack-group summary:hover {
@@ -302,7 +307,7 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             padding-bottom: 1rem;
-            padding-left: 1rem; /* Indent content */
+            padding-left: 1.2rem; /* Indent content to align under text, past arrow */
             animation: fadeIn 0.3s ease;
         }
 
