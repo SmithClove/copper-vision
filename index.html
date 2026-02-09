@@ -299,7 +299,25 @@
             font-style: italic;
         }
 
-        /* Stack tags */
+        /* Stack Grouping */
+        .stack-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .stack-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .group-label {
+            font-size: 0.7rem;
+            color: var(--copper);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-family: var(--mono);
+        }
+
         .stack-grid {
             display: flex;
             flex-wrap: wrap;
@@ -310,23 +328,15 @@
             font-size: 0.7rem;
             padding: 0.25rem 0.6rem;
             border: 1px solid #222;
-            color: var(--text);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
         
-        .tag:hover { border-color: var(--copper-dim); }
-
-        .tag-core {
+        .tag:hover { 
             border-color: var(--copper-dim);
-            color: var(--copper);
-            font-weight: 700;
-        }
-        
-        .tag-spec {
-            border-color: #222;
-            color: var(--text-dim);
+            color: var(--text);
         }
 
         /* Contact */
@@ -394,7 +404,7 @@
         <div class="section-head">Research</div>
         <div class="pub-item">
             <div class="pub-title"><a href="https://link.springer.com/book/10.1007/978-3-031-78768-3" target="_blank" rel="noopener">Machine Learning Applications for Satellite Imagery & Fire Detection</a></div>
-            <div class="pub-meta"><span class="venue">Springer Nature</span> · Cited by NASA FireSense, NSF Convergence Accelerator, Deployed by NARSS</div>
+            <div class="pub-meta"><span class="venue">Springer Nature</span> · Cited by NASA FireSense, NSF Convergence Accelerator, NARSS</div>
             <details class="cited-by">
                 <summary>Cited By</summary>
                 <div class="citation-item">
@@ -426,59 +436,89 @@
 
     <div class="section">
         <div class="section-head">Stack</div>
-        <div class="stack-grid">
-            <span class="tag tag-core">Azure</span>
-            <span class="tag tag-core">Git</span>
-            <span class="tag tag-core">Machine Learning</span>
-            <span class="tag tag-core">Power BI</span>
-            <span class="tag tag-core">Python</span>
-            <span class="tag tag-core">SQL</span>
-
-            <span class="tag tag-spec">Big-Tiger-Gemma-27B</span>
-            <span class="tag tag-spec">Devtral-2-123B</span>
-            <span class="tag tag-spec">Evol-Instruct</span>
-            <span class="tag tag-spec">Olmo-3.1-32B</span>
-            <span class="tag tag-spec">Phi-4</span>
-            <span class="tag tag-spec">Phi-4-25B</span>
-            <span class="tag tag-spec">Qwen3-Coder-Next</span>
-
-            <span class="tag tag-spec">Azure Data Factory</span>
-            <span class="tag tag-spec">Azure DevOps</span>
-            <span class="tag tag-spec">Azure Synapse</span>
-            <span class="tag tag-spec">DAX</span>
-            <span class="tag tag-spec">Deneb / Vega</span>
-            <span class="tag tag-spec">Power Query</span>
-            <span class="tag tag-spec">T-SQL</span>
-            <span class="tag tag-spec">Tabular Editor</span>
-
-            <span class="tag tag-spec">Archive Indexing</span>
-            <span class="tag tag-spec">Elasticsearch</span>
-            <span class="tag tag-spec">NumPy</span>
-            <span class="tag tag-spec">Pandas</span>
-            <span class="tag tag-spec">Polars</span>
-            <span class="tag tag-spec">Scikit-learn</span>
-            <span class="tag tag-spec">Synthetic Data Upcycling</span>
-
-            <span class="tag tag-spec">Document Restoration</span>
-            <span class="tag tag-spec">LayoutLM</span>
-            <span class="tag tag-spec">OpenCV</span>
-            <span class="tag tag-spec">PaddleOCR</span>
-            <span class="tag tag-spec">PyTorch</span>
-            <span class="tag tag-spec">Tesseract</span>
-            <span class="tag tag-spec">YOLO</span>
-
-            <span class="tag tag-spec">Hugging Face</span>
-            <span class="tag tag-spec">LM Studio</span>
-            <span class="tag tag-spec">Local LLMs</span>
-            <span class="tag tag-spec">Persuasion Research</span>
-            <span class="tag tag-spec">RAG</span>
-            <span class="tag tag-spec">Transformers</span>
-
-            <span class="tag tag-spec">LoRaWAN</span>
-            <span class="tag tag-spec">MQTT</span>
-            <span class="tag tag-spec">Network Diagnostics</span>
-            <span class="tag tag-spec">SDR</span>
+        
+        <div class="stack-group">
+            <div class="group-label">Robotics & Signals</div>
+            <div class="stack-grid">
+                <span class="tag">Autonomous Home Service</span>
+                <span class="tag">LoRaWAN</span>
+                <span class="tag">MQTT</span>
+                <span class="tag">Network Diagnostics</span>
+                <span class="tag">Reachy Mini</span>
+                <span class="tag">SDR</span>
+                <span class="tag">Ubuntu Server</span>
+            </div>
         </div>
+
+        <div class="stack-group">
+            <div class="group-label">Local AI & LLMs</div>
+            <div class="stack-grid">
+                <span class="tag">Applied Data Research</span>
+                <span class="tag">Evol-Instruct</span>
+                <span class="tag">Gemma</span>
+                <span class="tag">Hugging Face</span>
+                <span class="tag">LM Studio</span>
+                <span class="tag">Mistral</span>
+                <span class="tag">OLMo</span>
+                <span class="tag">Phi</span>
+                <span class="tag">Qwen</span>
+                <span class="tag">RAG</span>
+                <span class="tag">Transformers</span>
+            </div>
+        </div>
+
+        <div class="stack-group">
+            <div class="group-label">Computer Vision & OCR</div>
+            <div class="stack-grid">
+                <span class="tag">Document Restoration</span>
+                <span class="tag">LayoutLM</span>
+                <span class="tag">OpenCV</span>
+                <span class="tag">PaddleOCR</span>
+                <span class="tag">PyTorch</span>
+                <span class="tag">Tesseract</span>
+                <span class="tag">YOLO</span>
+            </div>
+        </div>
+
+        <div class="stack-group">
+            <div class="group-label">Cloud & Data Engineering</div>
+            <div class="stack-grid">
+                <span class="tag">Archive Indexing</span>
+                <span class="tag">Azure</span>
+                <span class="tag">Azure Data Factory</span>
+                <span class="tag">Azure DevOps</span>
+                <span class="tag">Azure Synapse</span>
+                <span class="tag">Elasticsearch</span>
+                <span class="tag">Git</span>
+                <span class="tag">SQL</span>
+            </div>
+        </div>
+
+        <div class="stack-group">
+            <div class="group-label">Data Strategy & Visualization</div>
+            <div class="stack-grid">
+                <span class="tag">DAX</span>
+                <span class="tag">Deneb / Vega</span>
+                <span class="tag">Power BI</span>
+                <span class="tag">Power Query</span>
+                <span class="tag">T-SQL</span>
+                <span class="tag">Tabular Editor</span>
+            </div>
+        </div>
+
+        <div class="stack-group">
+            <div class="group-label">Data Science & Processing</div>
+            <div class="stack-grid">
+                <span class="tag">Machine Learning</span>
+                <span class="tag">NumPy</span>
+                <span class="tag">Pandas</span>
+                <span class="tag">Polars</span>
+                <span class="tag">Python</span>
+                <span class="tag">Scikit-learn</span>
+                <span class="tag">Synthetic Data Upcycling</span>
+            </div>
+        </div>
+
     </div>
 
     <div class="section" id="contact">
