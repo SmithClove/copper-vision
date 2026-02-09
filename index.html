@@ -364,7 +364,7 @@
 <div class="shell">
 
     <div class="topbar">
-        <span id="visit-counter">YOUR VISITS: ...</span>
+        <span id="visit-counter">VISITS: ...</span>
         
         <nav class="topbar-nav">
             <a href="#about">About</a>
@@ -516,7 +516,7 @@
         <div class="section-head">Contact</div>
         <div class="contact-info">
             <p><a href="tel:+15412103100">541-210-3100</a><br>
-            <a href="mailto:optic@copper.vision">optic@copper.vision</a></p>
+            <a href="/cdn-cgi/l/email-protection#d8b7a8acb1bb98bbb7a8a8bdaaf6aeb1abb1b7b6"><span class="__cf_email__" data-cfemail="a2cdd2d6cbc1e2c1cdd2d2c7d08cd4cbd1cbcdcc">[email&#160;protected]</span></a></p>
         </div>
     </div>
 
@@ -526,50 +526,47 @@
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Dynamic year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
     // GLOBAL HIT COUNTER (Zero-Infra)
-    // Uses CountAPI to fetch a persistent JSON object.
+    // Primary:  Abacus API (drop-in countapi.xyz replacement)
+    // Secondary: counterapi.dev
+    // Fallback:  localStorage (graceful degradation, dimmed LED cue)
     (function() {
         const el = document.getElementById('visit-counter');
-        
-        // Random GUID namespace to obscure the endpoint from public guessing
-        const namespace = '529a-49c1-882b'; 
-        const key = 'visits';
-        
-        // Helper: Pad numbers for the Matrix aesthetic (e.g., 00124)
+        const namespace = 'copper.vision';
+        const key = 'pageviews';
         const pad = (num, places) => String(num).padStart(places, '0');
 
-        // 1. Hit the endpoint (increments count by 1)
-        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('API Error');
-                }
-            })
-            .then(data => {
-                // 2. Update DOM with global count
-                el.textContent = 'VISITS: ' + pad(data.value, 5);
-                
-                // Keep local storage in sync just in case
-                localStorage.setItem('cv_visits', data.value);
-            })
-            .catch(error => {
-                // Fallback: If API is blocked (e.g. uBlock Origin), use local count
-                // This ensures the site never looks "broken"
-                console.warn('Counter API blocked/failed. Using local fallback.');
-                let localCount = parseInt(localStorage.getItem('cv_visits') || '0', 10) + 1;
-                localStorage.setItem('cv_visits', localCount);
-                
-                el.textContent = 'VISITS: ' + pad(localCount, 5);
-                el.style.color = '#8b5a1a'; // Dim copper visual cue indicating offline mode
-            });
-    })();
-</script>
+        // Provider chain — first success wins
+        const providers = [
+            {
+                name: 'abacus',
+                hit: () => fetch('https://abacus.jasoncameron.dev/hit/' + namespace + '/' + key)
+                    .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                    .then(function(d) { return d.value; })
+            },
+            {
+                name: 'counterapi',
+                hit: () => fetch('https://counterapi.dev/api/' + namespace + '/' + key + '/up')
+                    .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                    .then(function(d) { return d.count; })
+            }
+        ];
 
-</body>
-</html>
+        (async function resolve() {
+            for (const provider of providers) {
+                try {
+                    const count = await provider.hit();
+                    el.textContent = 'VISITS: ' + pad(count, 5);
+                    localStorage.setItem('cv_visits', count);
+                    return; // success — done
+                } catch (e) {
+                    console.warn('[counter] ' + provider.name + ' failed:', e.message);
+                }
+            }
+            // All providers down — local fallback
+            console.warn('[counter] All APIs failed. Using local fallback.');
+            var localCount = parseInt(localStorage.getItem('cv_visits') || '0', 10) + 1;
